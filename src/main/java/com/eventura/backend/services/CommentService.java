@@ -3,7 +3,7 @@ package com.eventura.backend.services;
 import com.eventura.backend.entities.Comment;
 import com.eventura.backend.entities.Evenement;
 import com.eventura.backend.entities.User;
-//import com.eventura.backend.exceptions.InappropriateContentException;
+import com.eventura.backend.exceptions.InappropriateContentException;
 import com.eventura.backend.repositories.CommentRepository;
 import com.eventura.backend.repositories.EvenementRepository;
 import com.eventura.backend.repositories.UserRepository;
@@ -28,8 +28,7 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final EvenementRepository evenementRepository;
     private final UserRepository userRepository;
-    //private final CommentModerationService moderationService;
-
+    private final CommentModerationService moderationService;
     @Transactional(readOnly = true)
     public Page<Comment> getCommentsByEventId(Long eventId, Pageable pageable) {
         return commentRepository.findByEvenementIdEvenementOrderByCreatedAtDesc(eventId, pageable);
@@ -38,9 +37,9 @@ public class CommentService {
     @Transactional
     public Comment addComment(Long eventId, String content) {
         // Vérifier si le contenu est approprié
-        /*if (!moderationService.isContentAppropriate(content)) {
+        if (!moderationService.isContentAppropriate(content)) {
             throw new InappropriateContentException("Le commentaire contient du contenu inapproprié");
-        }*/
+        }
 
         // Récupérer l'utilisateur authentifié
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -66,9 +65,9 @@ public class CommentService {
     @Transactional
     public Comment updateComment(Long commentId, String content) {
         // Vérifier si le contenu est approprié
-        /*if (!moderationService.isContentAppropriate(content)) {
+        if (!moderationService.isContentAppropriate(content)) {
             throw new InappropriateContentException("Le commentaire contient du contenu inapproprié");
-        }*/
+        }
 
         // Récupérer l'utilisateur authentifié
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
