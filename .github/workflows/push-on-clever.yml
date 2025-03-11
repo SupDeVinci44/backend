@@ -1,0 +1,27 @@
+name: Deploy to Clever Cloud
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.CLEVER_CLOUD_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan push-n3-par-clevercloud-customers.services.clever-cloud.com >> ~/.ssh/known_hosts
+
+      - name: Add Clever Cloud remote
+        run: git remote add clever git+ssh://git@push-n3-par-clevercloud-customers.services.clever-cloud.com/app_80651435-7b96-4c7f-a772-4fcbfd695794.git
+
+      - name: Push to Clever Cloud
+        run: git push clever master
