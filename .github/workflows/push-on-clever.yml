@@ -24,4 +24,4 @@ jobs:
         run: git remote add clever git+ssh://git@push-n3-par-clevercloud-customers.services.clever-cloud.com/app_80651435-7b96-4c7f-a772-4fcbfd695794.git
 
       - name: Push to Clever Cloud
-        run: git push clever master
+        run: git push
