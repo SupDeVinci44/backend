@@ -26,10 +26,16 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
-                        req.requestMatchers("/api/auth/**")
-                                .permitAll()
-                                .anyRequest()
-                                .authenticated()
+                        req.requestMatchers(
+                                "/api/auth/**",
+                                "/swagger-ui/**",       // Swagger UI
+                                "/v3/api-docs/**",      // Documentation OpenAPI
+                                "/swagger-resources/**",// Swagger resources
+                                "/webjars/**" ,          // Webjars utilisés par Swagger
+                                "/v3/api-docs/**"
+
+                        ).permitAll()
+                        .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
