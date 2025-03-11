@@ -32,7 +32,8 @@ public class SecurityConfig {
                                 "/v3/api-docs/**",      // Documentation OpenAPI
                                 "/swagger-resources/**",// Swagger resources
                                 "/webjars/**" ,          // Webjars utilisés par Swagger
-                                "/v3/api-docs/**"
+                                "/v3/api-docs/**",
+                                "/actuator/health"
 
                         ).permitAll()
                         .anyRequest().authenticated()
