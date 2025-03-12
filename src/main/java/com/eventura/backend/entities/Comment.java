@@ -31,8 +31,8 @@ public class Comment {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "event_id", nullable = false)
-    private Event event;
+    @JoinColumn(name = "id_evenement", nullable = false)
+    private Evenement evenement;
 
     @PrePersist
     protected void onCreate() {
