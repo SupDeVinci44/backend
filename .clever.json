@@ -1,0 +1,6 @@
+{
+    "deploy": {
+      "goal": "./mvnw clean package"
+    }
+  }
+  
