@@ -8,12 +8,12 @@ import java.util.Optional;
 
 @Repository
 public interface LikeRepository extends JpaRepository<Like, Long> {
-    
-    Optional<Like> findByUserIdAndEventId(Long userId, Long eventId);
-    
-    boolean existsByUserIdAndEventId(Long userId, Long eventId);
-    
-    long countByEventId(Long eventId);
-    
-    void deleteByUserIdAndEventId(Long userId, Long eventId);
-} 
+
+    Optional<Like> findByUserIdAndEvenementIdEvenement(Long userId, Long idEvenement);
+
+    boolean existsByUserIdAndEvenementIdEvenement(Long userId, Long idEvenement);
+
+    long countByEvenementIdEvenement(Long idEvenement);
+
+    void deleteByUserIdAndEvenementIdEvenement(Long userId, Long idEvenement);
+}
