@@ -1,7 +1,7 @@
 package com.eventura.backend.controllers;
 
 import com.eventura.backend.entities.Comment;
-//import com.eventura.backend.exceptions.InappropriateContentException;
+import com.eventura.backend.exceptions.InappropriateContentException;
 import com.eventura.backend.services.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -38,14 +38,14 @@ public class CommentController {
             return ResponseEntity.badRequest().build();
         }
 
-        //try {
+        try {
             Comment comment = commentService.addComment(eventId, content);
             return ResponseEntity.ok(comment);
-        /*} catch (InappropriateContentException e) {
+        } catch (InappropriateContentException e) {
             Map<String, String> errorResponse = new HashMap<>();
             errorResponse.put("error", e.getMessage());
             return ResponseEntity.status(403).body(errorResponse);
-        }*/
+        }
     }
 
     @PutMapping("/{commentId}")
@@ -65,11 +65,11 @@ public class CommentController {
             return ResponseEntity.notFound().build();
         } catch (SecurityException e) {
             return ResponseEntity.status(403).build();
-        } /*catch (InappropriateContentException e) {
+        } catch (InappropriateContentException e) {
             Map<String, String> errorResponse = new HashMap<>();
             errorResponse.put("error", e.getMessage());
             return ResponseEntity.status(403).body(errorResponse);
-        }*/
+        }
     }
 
     @DeleteMapping("/{commentId}")
