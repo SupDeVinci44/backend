@@ -1,4 +1,3 @@
- 
 package com.eventura.backend.repositories;
 
 import com.eventura.backend.entities.Comment;
@@ -9,10 +8,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-    
-    Page<Comment> findByEventIdOrderByCreatedAtDesc(Long eventId, Pageable pageable);
-    
+
+    Page<Comment> findByEvenementIdEvenementOrderByCreatedAtDesc(Long idEvenement, Pageable pageable);
+
     Page<Comment> findByUserIdOrderByCreatedAtDesc(Long userId, Pageable pageable);
-    
-    Long countByEventId(Long eventId);
+
+    Long countByEvenementIdEvenement(Long idEvenement);
 }

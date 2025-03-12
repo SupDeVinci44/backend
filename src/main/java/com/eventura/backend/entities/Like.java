@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Table(name = "likes", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"user_id", "event_id"})
+        @UniqueConstraint(columnNames = {"user_id", "id_evenement"})
 })
 public class Like {
 
@@ -28,9 +28,9 @@ public class Like {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "event_id", nullable = false)
-    private Event event;
-    
+    @JoinColumn(name = "id_evenement", nullable = false)
+    private Evenement evenement;
+
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
