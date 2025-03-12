@@ -2,7 +2,7 @@ name: Deploy to Clever Cloud
 
 on:
   workflow_run:
-    workflows: ["java-maven"]
+    workflows: ["Java CI with Maven"]
     types:
       - completed
 
