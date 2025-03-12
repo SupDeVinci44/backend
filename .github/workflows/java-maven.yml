@@ -42,6 +42,13 @@ jobs:
         run: mvn -B package --file pom.xml
 
       - name: Run Tests
+        env:
+          POSTGRESQL_ADDON_DB: ${{ secrets.POSTGRESQL_ADDON_DB }}
+          POSTGRESQL_ADDON_HOST: ${{ secrets.POSTGRESQL_ADDON_HOST }}
+          POSTGRESQL_ADDON_PORT: ${{ secrets.POSTGRESQL_ADDON_PORT }}
+          POSTGRESQL_ADDON_USER: ${{ secrets.POSTGRESQL_ADDON_USER }}
+          POSTGRESQL_ADDON_PASSWORD: ${{ secrets.POSTGRESQL_ADDON_PASSWORD }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
         run: mvn test
 
       - name: Debug Build Failure
