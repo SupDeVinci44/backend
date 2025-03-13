@@ -70,46 +70,46 @@ jobs:
     if: always() && (github.event_name == 'schedule' || github.event_name == 'push' || github.event_name == 'pull_request')
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
-    - name: Debug - List project files
-      run: |
-        echo "Listing project files..."
-        ls -R || echo "Failed to list files."
-
-    - name: Set up JDK 21
-      uses: actions/setup-java@v4
-      with:
-        java-version: "21"
-        distribution: "temurin"
-
-    - name: Build Java project
-      run: mvn clean install -DskipTests -X
-
-    - name: Debug - List compiled files
-      run: |
-        echo "Listing compiled files in target/classes..."
-        ls -R target/classes || echo "No compiled files found."
-
-    - name: Clean CodeQL database
-      run: |
-        echo "Cleaning CodeQL database..."
-        rm -rf /home/runner/work/_temp/codeql_databases
-
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v3
-      with:
-        languages: java
-        setup-java-options: |
-          --include-dependencies
-
-    - name: Debug - List files in CodeQL database
-      run: |
-        echo "Listing files in CodeQL database..."
-        ls -R /home/runner/work/_temp/codeql_databases/java || echo "No files found."
-
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v3
-      with:
-        verbosity: debug
+      - name: Checkout repository
+        uses: actions/checkout@v4
+  
+      - name: Debug - List project files
+        run: |
+          echo "Listing project files..."
+          ls -R || echo "Failed to list files."
+  
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: "21"
+          distribution: "temurin"
+  
+      - name: Build Java project
+        run: mvn clean install -DskipTests -X
+  
+      - name: Debug - List compiled files
+        run: |
+          echo "Listing compiled files in target/classes..."
+          ls -R target/classes || echo "No compiled files found."
+  
+      - name: Clean CodeQL database
+        run: |
+          echo "Cleaning CodeQL database..."
+          rm -rf /home/runner/work/_temp/codeql_databases
+  
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: java
+          setup-java-options: |
+            --include-dependencies
+  
+      - name: Debug - List files in CodeQL database
+        run: |
+          echo "Listing files in CodeQL database..."
+          ls -R /home/runner/work/_temp/codeql_databases/java || echo "No files found."
+  
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          verbosity: debug
