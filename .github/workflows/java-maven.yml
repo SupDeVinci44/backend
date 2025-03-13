@@ -85,7 +85,7 @@ jobs:
           distribution: "temurin"
   
       - name: Build Java project
-        run: mvn clean install -DskipTests -X
+        run: mvn clean install -DskipTests -Dmaven.javadoc.skip=true -Dmaven.source.skip=true
   
       - name: Debug - List compiled files
         run: |
