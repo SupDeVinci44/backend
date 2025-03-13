@@ -1,5 +1,7 @@
 package com.eventura.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,11 +24,12 @@ public class LienDateEvenement {
 
     @ManyToOne
     @JoinColumn(name = "id_evenement")
+    @JsonBackReference
     private Evenement evenement;
 
     @Column(name = "heure_debut")
-    private Integer heureDebut;
+    private String heureDebut;
 
     @Column(name = "heure_fin")
-    private Integer heureFin;
+    private String heureFin;
 }

@@ -1,5 +1,7 @@
 package com.eventura.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +20,7 @@ public class LienHandicapEvenement {
 
     @ManyToOne
     @JoinColumn(name = "id_evenement")
+    @JsonBackReference
     private Evenement evenement;
 
     @ManyToOne
