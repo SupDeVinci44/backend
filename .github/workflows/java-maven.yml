@@ -20,20 +20,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Cache Maven dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2/repository
-          key: maven-${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            maven-${{ runner.os }}-
-
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
           java-version: "21"
           distribution: "temurin"
-          cache: maven
+          cache: maven  # Utilise le cache Maven intégré
 
       - name: Verify Java version
         run: java -version
@@ -49,7 +41,22 @@ jobs:
         run: mvn -B package --file pom.xml
 
       - name: Run Tests
+        env:
+          POSTGRESQL_ADDON_DB: ${{ secrets.POSTGRESQL_ADDON_DB }}
+          POSTGRESQL_ADDON_HOST: ${{ secrets.POSTGRESQL_ADDON_HOST }}
+          POSTGRESQL_ADDON_PORT: ${{ secrets.POSTGRESQL_ADDON_PORT }}
+          POSTGRESQL_ADDON_USER: ${{ secrets.POSTGRESQL_ADDON_USER }}
+          POSTGRESQL_ADDON_PASSWORD: ${{ secrets.POSTGRESQL_ADDON_PASSWORD }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
         run: mvn test
+
+      - name: Debug Build Failure
+        if: failure()
+        run: |
+          echo "Build failed. Printing logs..."
+          cat target/surefire-reports/*.txt || true
+          echo "Printing Maven build log..."
+          cat target/build.log || true
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
@@ -59,7 +66,8 @@ jobs:
 
   codeql-analysis:
     runs-on: ubuntu-latest
-    if: github.event_name == 'schedule' || github.event_name == 'push' || github.event_name == 'pull_request'
+    needs: build  # ⬅️ Assure que le job build réussit avant de lancer CodeQL
+    if: always() && (github.event_name == 'schedule' || github.event_name == 'push' || github.event_name == 'pull_request')
 
     steps:
       - name: Checkout repository
