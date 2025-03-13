@@ -101,8 +101,15 @@ jobs:
       uses: github/codeql-action/init@v3
       with:
         languages: java
+        setup-java-options: |
+          --include-dependencies
+
+    - name: Debug - List files in CodeQL database
+      run: |
+        echo "Listing files in CodeQL database..."
+        ls -R /home/runner/work/_temp/codeql_databases/java || echo "No files found."
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
       with:
-        debug: true
+        verbosity: debug
