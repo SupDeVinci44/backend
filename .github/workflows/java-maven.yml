@@ -5,9 +5,13 @@ on:
     branches: ["main"]
   pull_request:
     branches: ["main"]
-
   schedule:
     - cron: '0 12 * * 1'  # Exécuter CodeQL chaque lundi à 12h UTC
+
+permissions:
+  actions: read
+  contents: read
+  security-events: write  # ⬅️ Permet à CodeQL d’enregistrer ses résultats
 
 jobs:
   build:
@@ -54,12 +58,6 @@ jobs:
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
         run: mvn test
 
-      - name: Debug Build Failure
-        if: failure()
-        run: |
-          echo "Build failed. Printing logs..."
-          cat target/surefire-reports/*.txt || true
-
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -69,7 +67,7 @@ jobs:
   codeql-analysis:
     runs-on: ubuntu-latest
     if: github.event_name == 'schedule' || github.event_name == 'push' || github.event_name == 'pull_request'
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -80,11 +78,15 @@ jobs:
           java-version: "21"
           distribution: "temurin"
 
+      - name: Build project before CodeQL
+        run: mvn clean package -DskipTests  # ⬅️ Compilation avant l'analyse
+
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
           languages: java
-          debug: true  # Active les logs détaillés
+          source-root: ./
+          debug: true
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
