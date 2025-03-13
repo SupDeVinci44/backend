@@ -4,6 +4,7 @@ import com.eventura.backend.entities.Comment;
 import com.eventura.backend.exceptions.InappropriateContentException;
 import com.eventura.backend.services.CommentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class CommentController {
 
+    @Autowired
     private final CommentService commentService;
 
     @GetMapping("/evenement/{eventId}")

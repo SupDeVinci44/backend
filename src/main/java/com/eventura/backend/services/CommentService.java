@@ -37,9 +37,9 @@ public class CommentService {
     @Transactional
     public Comment addComment(Long eventId, String content) {
         // Vérifier si le contenu est approprié
-        if (!moderationService.isContentAppropriate(content)) {
+        /*if (!moderationService.isContentAppropriate(content)) {
             throw new InappropriateContentException("Le commentaire contient du contenu inapproprié");
-        }
+        }*/
 
         // Récupérer l'utilisateur authentifié
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -65,9 +65,9 @@ public class CommentService {
     @Transactional
     public Comment updateComment(Long commentId, String content) {
         // Vérifier si le contenu est approprié
-        if (!moderationService.isContentAppropriate(content)) {
+        /*if (!moderationService.isContentAppropriate(content)) {
             throw new InappropriateContentException("Le commentaire contient du contenu inapproprié");
-        }
+        }*/
 
         // Récupérer l'utilisateur authentifié
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
