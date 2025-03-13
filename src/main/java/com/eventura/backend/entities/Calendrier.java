@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -35,5 +37,6 @@ public class Calendrier {
     private Boolean estWeekend;
 
     @OneToMany(mappedBy = "date")
+    @JsonBackReference
     private List<LienDateEvenement> evenements;
 }

@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,5 +25,6 @@ public class Handicap {
     private String nomHandicap;
 
     @OneToMany(mappedBy = "handicap")
+    @JsonBackReference
     private List<LienHandicapEvenement> evenements;
 }

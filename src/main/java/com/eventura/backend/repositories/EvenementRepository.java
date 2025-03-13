@@ -13,7 +13,11 @@ import java.util.Optional;
 @Repository
 public interface EvenementRepository extends JpaRepository<Evenement, Long> {
 
-    @Query("SELECT e FROM Evenement e JOIN e.dates d JOIN d.date c WHERE c.jour >= :jour AND c.mois >= :mois AND c.annee >= :annee ORDER BY c.annee, c.mois, c.jour")
+    @Query("SELECT e, d \n" + //
+                "FROM Evenement e\n" + //
+                "JOIN e.dates lde\n" + //
+                "JOIN lde.date d\n" + //
+                "")
     Page<Evenement> findUpcomingEvents(@Param("jour") int jour, @Param("mois") int mois, @Param("annee") int annee, Pageable pageable);
 
     @Query("SELECT e FROM Evenement e WHERE LOWER(e.titre) LIKE LOWER(CONCAT('%', ?1, '%')) OR LOWER(e.description) LIKE LOWER(CONCAT('%', ?1, '%'))")
