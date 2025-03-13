@@ -83,13 +83,12 @@ jobs:
           distribution: "temurin"
 
       - name: Compile Java project
-        run: mvn clean compile -DskipTests  # ⬅️ CodeQL a besoin des .class
+        run: mvn clean package -DskipTests  # ⬅️ CodeQL a besoin des .class
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
           languages: java
-          source-root: ./src/main/java  # ⬅️ Vérifie que ton code est bien ici
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
