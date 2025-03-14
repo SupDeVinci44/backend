@@ -11,7 +11,7 @@ public class OpenApiConfig {
     public GroupedOpenApi customApi() {
         return GroupedOpenApi.builder()
                 .group("custom-api") // Nom du groupe
-                .pathsToMatch("/api/**") // N'expose que les routes commençant par /api
+                .pathsToMatch("/api/**","/actuator/*") // N'expose que les routes commençant par /api
                 .build();
     }
 }
