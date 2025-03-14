@@ -1,4 +1,4 @@
-name: Deploy to Clever Cloud
+name: Deploy to CleverCloud
 
 on:
   workflow_run:
